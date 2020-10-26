@@ -27,7 +27,6 @@ public class RigidbodyController : MonoBehaviour
     {
         var inputDirection = new Vector3(input.x, 0, input.y);
 
-        collider.material = inputDirection.magnitude > 0 ? movingPhysicsMaterial : stoppingPhysicsMaterial;
 
         if (rigidbody.velocity.magnitude < maxSpeed)
         {
