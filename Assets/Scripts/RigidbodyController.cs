@@ -4,41 +4,47 @@ using UnityEngine;
 
 public class RigidbodyController : MonoBehaviour
 {
-    [SerializeField]
-    private float accelerationForce = 10f;
+    public static RigidbodyController instance;
 
-    [SerializeField]
-    private float maxSpeed = 2;
+    public Rigidbody playerRB;
 
-    [SerializeField]
-    PhysicMaterial stoppingPhysicsMaterial, movingPhysicsMaterial;
+    public float moveSpeed;
 
-    private new Rigidbody rigidbody;
-    private Vector2 input;
-    private new Collider collider;
+    private Vector2 moveInput;
+    private Vector2 mouseInput;
 
-    private void Start()
+    public float mouseSensitivity = 1f;
+
+    public Transform viewCam;
+
+    private void Awake()
     {
-        rigidbody = GetComponent<Rigidbody>();
-        collider = GetComponent<Collider>();
+        instance = this;
     }
 
-    private void FixedUpdate()
+    // Start is called before the first frame update
+    void Start()
     {
-        var inputDirection = new Vector3(input.x, 0, input.y);
-
-
-        if (rigidbody.velocity.magnitude < maxSpeed)
-        {
-            rigidbody.AddForce(inputDirection * accelerationForce, ForceMode.Acceleration);
-        }
+        playerRB = GetComponent<Rigidbody>();
     }
 
-    private void Update()
+    // Update is called once per frame
+    void Update()
     {
-        input.x = Input.GetAxisRaw("Horizontal");
-        input.y = Input.GetAxisRaw("Vertical");
+        //Player Movement
+        moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
+        Vector3 horizontalMovement = transform.right * moveInput.x;
 
+        Vector3 verticalMovement = transform.forward * moveInput.y;
+
+        playerRB.velocity = (horizontalMovement + verticalMovement) * moveSpeed;
+
+        // Player mouse look
+        mouseInput = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y") * mouseSensitivity);
+
+        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + mouseInput.x, transform.rotation.eulerAngles.z);
+
+        viewCam.localRotation = Quaternion.Euler(viewCam.localRotation.eulerAngles + new Vector3(-mouseInput.y, 0f, 0f));
     }
 }
