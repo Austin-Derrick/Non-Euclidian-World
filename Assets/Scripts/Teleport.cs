@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Teleport : MonoBehaviour
 {
+	// Source code help https://www.youtube.com/watch?v=cuQao3hEKfs
 	public Transform player;
 	public BoxCollider reciever;
 
