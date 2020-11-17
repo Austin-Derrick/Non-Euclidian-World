@@ -10,8 +10,8 @@ public class PortalCamera : MonoBehaviour
 
     private void Update()
     {
-        Vector3 playerOffsetFromPortal = playerCamera.position - otherPortal.position;
-        transform.position = portal.position + playerOffsetFromPortal;
+        //Vector3 playerOffsetFromPortal = playerCamera.position - otherPortal.position;
+        //transform.position = portal.position + playerOffsetFromPortal;
 
         float angleDifferenceBetweenPortalRotations = Quaternion.Angle(portal.rotation, otherPortal.rotation);
 
