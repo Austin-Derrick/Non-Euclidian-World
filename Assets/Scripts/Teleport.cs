@@ -10,11 +10,11 @@ public class Teleport : MonoBehaviour
 	public BoxCollider reciever;
 
 	private bool playerIsOverlapping = false;
-
+	int counter = 0;
 	// Update is called once per frame
 	void Update()
 	{
-		if (playerIsOverlapping)
+		if (playerIsOverlapping && counter == 1)
 		{
 			Vector3 portalToPlayer = player.position - transform.position;
 			float dotProduct = Vector3.Dot(transform.up, portalToPlayer);
@@ -22,7 +22,7 @@ public class Teleport : MonoBehaviour
             if (dotProduct < 0f)
             {
 				float rotationDiff = -Quaternion.Angle(transform.rotation, reciever.transform.rotation);
-				//rotationDiff += 180;
+				rotationDiff += 180;
 				player.Rotate(Vector3.up, rotationDiff);
 
 				Vector3 positionOffset = Quaternion.Euler(0f, rotationDiff, 0f) * portalToPlayer; //+ new Vector3(0, 0, 5);
@@ -30,7 +30,8 @@ public class Teleport : MonoBehaviour
 
 				playerIsOverlapping = false;
             }
-        }
+			counter++;
+		}
 	}
 
 	void OnTriggerEnter(Collider other)
@@ -38,6 +39,7 @@ public class Teleport : MonoBehaviour
 		if (other.tag == "Player")
 		{
 			playerIsOverlapping = true;
+			counter = 1;
 		}
 	}
 
@@ -46,6 +48,7 @@ public class Teleport : MonoBehaviour
 		if (other.tag == "Player")
 		{
 			playerIsOverlapping = false;
+			counter = 0;
 		}
 	}
 
