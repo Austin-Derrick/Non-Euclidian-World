@@ -13,14 +13,14 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Long_Front_Enter
+  - Long_Front_Exit
+  - Long_Back_Enter
+  - Long_Back_Exit
+  - Short_Front_Enter
+  - Short_Front_Exit
+  - Short_Back_Enter
+  - Short_Back_Exit
   - 
   - 
   - 
