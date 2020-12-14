@@ -4,27 +4,20 @@ using UnityEngine;
 
 public class PortalSetupManager : MonoBehaviour
 {
-    public Camera cameraRight;
-    public Material cameraMatRight;
-
-    public Camera cameraLeft;
-    public Material cameraMatLeft;
+    public List<Camera> cameras = new List<Camera>();
+    public List<Material> camMatertials = new List<Material>();
+    
     // Start is called before the first frame update
     void Start()
     {
-
-        if (cameraLeft.targetTexture != null)
+        for (int i = 0; i < cameras.Count; i++)
         {
-            cameraLeft.targetTexture.Release();
+            if (cameras[i].targetTexture != null)
+            {
+                cameras[i].targetTexture.Release();
+            }
+            cameras[i].targetTexture = new RenderTexture(Screen.width, Screen.height, 24);
+            camMatertials[i].mainTexture = cameras[i].targetTexture;
         }
-        cameraLeft.targetTexture = new RenderTexture(Screen.width, Screen.height, 24);
-        cameraMatLeft.mainTexture = cameraLeft.targetTexture;
-
-        if (cameraRight.targetTexture != null)
-        {
-            cameraRight.targetTexture.Release();
-        }
-        cameraRight.targetTexture = new RenderTexture(Screen.width, Screen.height, 24);
-        cameraMatRight.mainTexture = cameraRight.targetTexture;
     }
 }
